@@ -12,6 +12,9 @@ from report import build_summary, format_stats
 from train import Config, run_training
 
 
+CLOCK_SNAPSHOT_EPOCHS = frozenset({5_000})
+
+
 def main() -> None:
     args = parse_args()
     config = Config(epochs=args.epochs)
@@ -45,7 +48,7 @@ def main() -> None:
         betas=(config.beta1, config.beta2),
     )
     
-    history, elapsed_seconds = run_training(
+    training_result = run_training(
         model,
         optimizer,
         train_tokens,
@@ -54,15 +57,18 @@ def main() -> None:
         test_labels,
         config,
         output_dir / "metrics.csv",
+        CLOCK_SNAPSHOT_EPOCHS,
     )
 
-    save_training_plot(history, output_dir / "training.png", config.prime)
+    save_training_plot(training_result.history, output_dir / "training.png", config.prime)
+    for epoch, token_embedding in training_result.token_embedding_snapshots.items():
+        save_clock_plot(token_embedding, config.prime, output_dir / f"clock-epoch-{epoch}.png")
     save_clock_plot(model.token_embedding.weight.detach(), config.prime, output_dir / "clock.png")
     summary = build_summary(
         config,
-        history,
+        training_result.history,
         device,
-        elapsed_seconds,
+        training_result.elapsed_seconds,
         sum(parameter.numel() for parameter in model.parameters()),
         train_labels.shape[0],
         test_labels.shape[0],

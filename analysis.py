@@ -9,13 +9,11 @@ def flatten_parameters(model: nn.Module) -> Tensor:
 
 
 # used for monitoring the progress of the training
-def relative_weight_change(current: Tensor, previous: Tensor, epoch_gap: int) -> float:
-    if epoch_gap <= 0:
-        return 0.0
-    # ||theta_now - theta_previous|| / (||theta_previous|| * elapsed epochs)
+def relative_weight_change(current: Tensor, previous: Tensor) -> float:
+    # ||theta_now - theta_previous|| / ||theta_previous||
     displacement = torch.linalg.vector_norm(current - previous)
     previous_norm = torch.linalg.vector_norm(previous).clamp_min(1e-12)
-    return float(displacement / previous_norm / epoch_gap)
+    return float(displacement / previous_norm)
 
 
 # used for visualizing the embedding of the numbers

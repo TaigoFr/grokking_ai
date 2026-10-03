@@ -38,6 +38,13 @@ class Metrics:
     relative_weight_change_per_epoch: float
 
 
+@dataclass(frozen=True)
+class TrainingResult:
+    history: list[Metrics]
+    elapsed_seconds: float
+    token_embedding_snapshots: dict[int, Tensor]
+
+
 def run_training(
     model: ModularAdditionTransformer,
     optimizer: torch.optim.Optimizer,
@@ -47,26 +54,31 @@ def run_training(
     test_labels: Tensor,
     config: Config,
     metrics_path: Path,
-) -> tuple[list[Metrics], float]:
+    snapshot_epochs: frozenset[int] = frozenset(),
+) -> TrainingResult:
     history: list[Metrics] = []
-    previous_parameters = flatten_parameters(model)
-    previous_epoch = 0
+    token_embedding_snapshots: dict[int, Tensor] = {}
     started = time.perf_counter()
     with metrics_path.open("w", newline="") as metrics_file:
         writer = csv.DictWriter(metrics_file, fieldnames=list(Metrics.__dataclass_fields__))
         writer.writeheader()
+
         initial = measure(model, 0, train_tokens, train_labels, test_tokens, test_labels, 0.0)
         history.append(initial)
         writer.writerow(asdict(initial))
+
         for epoch in range(1, config.epochs + 1):
+            should_measure = epoch % config.log_every == 0 or epoch == config.epochs
+            previous_parameters = flatten_parameters(model) if should_measure else None
             train_step(model, optimizer, train_tokens, train_labels)
-            if epoch % config.log_every != 0 and epoch != config.epochs:
+
+            if epoch in snapshot_epochs:
+                token_embedding_snapshots[epoch] = model.token_embedding.weight.detach().cpu().clone()
+            if not should_measure:
                 continue
+
             current_parameters = flatten_parameters(model)
-            # Average the checkpoint displacement over the 100 elapsed optimizer steps.
-            movement = relative_weight_change(current_parameters, previous_parameters, epoch - previous_epoch)
-            previous_parameters = current_parameters
-            previous_epoch = epoch
+            movement = relative_weight_change(current_parameters, previous_parameters)
             metrics = measure(
                 model,
                 epoch,
@@ -79,6 +91,7 @@ def run_training(
             history.append(metrics)
             writer.writerow(asdict(metrics))
             metrics_file.flush()
+
             elapsed = time.perf_counter() - started
             print(
                 f"epoch {epoch:5d}  train {metrics.train_accuracy:.3f}  "
@@ -86,8 +99,9 @@ def run_training(
                 f"elapsed {elapsed:.0f}s",
                 flush=True,
             )
+
     elapsed_seconds = time.perf_counter() - started
-    return history, elapsed_seconds
+    return TrainingResult(history, elapsed_seconds, token_embedding_snapshots)
 
 
 def train_step(
