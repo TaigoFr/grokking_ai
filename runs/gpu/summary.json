@@ -1,0 +1,48 @@
+{
+  "device": "cuda",
+  "hardware": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "torch_version": "2.11.0.dev20260215+cu128",
+  "cpu_threads": 12,
+  "elapsed_seconds": 108.5925786259977,
+  "epochs": 40000,
+  "parameter_count": 227200,
+  "train_pairs": 3830,
+  "test_pairs": 8939,
+  "memorization_epoch": 200,
+  "grokking_epoch": 10500,
+  "final_train_accuracy": 1.0,
+  "final_test_accuracy": 1.0,
+  "final_train_loss": 8.813789268113567e-08,
+  "final_test_loss": 1.6418493101789018e-07,
+  "dead_period_mean_relative_weight_change_per_epoch": 0.00028636634417327715,
+  "dominant_embedding_frequencies": [
+    {
+      "frequency": 22,
+      "mean_magnitude": 4.577163219451904
+    },
+    {
+      "frequency": 18,
+      "mean_magnitude": 3.5513715744018555
+    },
+    {
+      "frequency": 27,
+      "mean_magnitude": 3.5433132648468018
+    }
+  ],
+  "config": {
+    "prime": 113,
+    "train_fraction": 0.3,
+    "epochs": 40000,
+    "learning_rate": 0.001,
+    "weight_decay": 1.0,
+    "beta1": 0.9,
+    "beta2": 0.98,
+    "model_dimension": 128,
+    "head_count": 4,
+    "head_dimension": 32,
+    "mlp_dimension": 512,
+    "model_seed": 999,
+    "data_seed": 598,
+    "log_every": 100
+  }
+}

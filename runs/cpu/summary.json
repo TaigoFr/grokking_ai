@@ -1,0 +1,48 @@
+{
+  "device": "cpu",
+  "hardware": "Intel(R) Core(TM) Ultra 9 275HX",
+  "torch_version": "2.14.1+cpu",
+  "cpu_threads": 12,
+  "elapsed_seconds": 1659.061394111999,
+  "epochs": 40000,
+  "parameter_count": 227200,
+  "train_pairs": 3830,
+  "test_pairs": 8939,
+  "memorization_epoch": 200,
+  "grokking_epoch": 28400,
+  "final_train_accuracy": 1.0,
+  "final_test_accuracy": 1.0,
+  "final_train_loss": 9.036372012981473e-08,
+  "final_test_loss": 2.0085412645469786e-07,
+  "dead_period_mean_relative_weight_change_per_epoch": 0.0001255652021736977,
+  "dominant_embedding_frequencies": [
+    {
+      "frequency": 36,
+      "mean_magnitude": 4.164969444274902
+    },
+    {
+      "frequency": 10,
+      "mean_magnitude": 3.9819798469543457
+    },
+    {
+      "frequency": 9,
+      "mean_magnitude": 3.2204341888427734
+    }
+  ],
+  "config": {
+    "prime": 113,
+    "train_fraction": 0.3,
+    "epochs": 40000,
+    "learning_rate": 0.001,
+    "weight_decay": 1.0,
+    "beta1": 0.9,
+    "beta2": 0.98,
+    "model_dimension": 128,
+    "head_count": 4,
+    "head_dimension": 32,
+    "mlp_dimension": 512,
+    "model_seed": 999,
+    "data_seed": 598,
+    "log_every": 100
+  }
+}

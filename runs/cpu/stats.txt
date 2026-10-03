@@ -1,0 +1,35 @@
+Modular addition grokking run
+==============================
+
+Device: cpu
+Hardware: Intel(R) Core(TM) Ultra 9 275HX
+PyTorch: 2.14.1+cpu
+CPU threads: 12
+Epochs: 40,000
+Wall time: 1659.1 seconds
+Parameters: 227,200
+Training pairs: 3,830
+Test pairs: 8,939
+Train accuracy reached 99%: epoch 200
+Test accuracy reached 99%: epoch 28400
+Final train accuracy: 100.00%
+Final test accuracy: 100.00%
+Final train loss: 9.036e-08
+Final test loss: 2.009e-07
+Mean dead-period weight change: 1.256e-04
+Dominant embedding frequencies: 36, 10, 9
+
+Training configuration
+----------------------
+Prime: 113
+Train fraction: 0.3
+Learning rate: 0.001
+Weight decay: 1.0
+Adam betas: (0.9, 0.98)
+Model dimension: 128
+Attention heads: 4
+Head dimension: 32
+MLP dimension: 512
+Model seed: 999
+Data seed: 598
+Log every: 100 epochs
