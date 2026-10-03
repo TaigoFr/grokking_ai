@@ -47,13 +47,13 @@ After memorizing the training set, part of the network keeps developing a genera
 Technically speaking, the network learns to organize its number embeddings into discrete Fourier modes. At frequency $k$, number $n$ has phase
 
 $$
-\phi_k(n)=\frac{2\pi kn}{p}.
+\phi_k(n)=\frac{2\pi k~n}{p}.
 $$
 
 Projecting the embedding of each number onto the learned cosine and sine directions gives approximately
 
 $$
-\left(\cos\phi_k(n),\ \sin\phi_k(n)\right).
+\left(\cos~\phi_k(n),\ \sin~\phi_k(n)\right).
 $$
 
 As $n$ runs from 0 to 112, these points trace a circle. The representation is computationally useful because addition becomes phase addition:
@@ -65,11 +65,11 @@ $$
 The transformer can combine the sine and cosine components using the identities
 
 $$
-\cos(x+y)=\cos x\cos y-\sin x\sin y,
+\cos(x+y)=\cos(x)\cos(y)-\sin(x)\sin(y),
 $$
 
 $$
-\sin(x+y)=\sin x\cos y+\cos x\sin y.
+\sin(x+y)=\sin(x)\cos(y)+\cos(x)\sin(y).
 $$
 
 For a candidate answer $c$, a term such as
@@ -145,19 +145,6 @@ The plateau mean uses logged epochs where training accuracy is at least 99% and 
 
 The GPU run was about 16 times faster. GPU arithmetic does not reproduce the exact sequence of CPU roundings, so the optimization trajectories and grokking epochs differ despite matching seeds and data. This sensitivity is expected for a delayed phase transition.
 
-Each run directory contains:
-
-- `training.png`: accuracy, cross-entropy, and relative weight change
-- `clock-epoch-5000.png`: dominant embedding clocks early in the plateau
-- `clock.png`: dominant Fourier modes in the learned number embeddings
-- `metrics.csv`: measurements every 100 epochs
-- `summary.json`: machine-readable run summary
-- `stats.txt`: readable hardware, timing, and result summary
-
-Full run details are in [`runs/cpu/stats.txt`](runs/cpu/stats.txt) and [`runs/gpu/stats.txt`](runs/gpu/stats.txt).
-
-![CPU training run](runs/cpu/training.png)
-
 ## Repository layout
 
 ```text
@@ -177,6 +164,15 @@ Full run details are in [`runs/cpu/stats.txt`](runs/cpu/stats.txt) and [`runs/gp
     ├── cpu/
     └── gpu/
 ```
+
+Each run directory ([`runs/cpu`](runs/cpu) and [`runs/gpu`](runs/gpu)) contains:
+
+- `training.png`: accuracy, cross-entropy, and relative weight change
+- `clock-epoch-5000.png`: dominant embedding clocks early in the plateau
+- `clock.png`: dominant Fourier modes in the learned number embeddings
+- `metrics.csv`: measurements every 100 epochs
+- `summary.json`: machine-readable run summary
+- `stats.txt`: readable hardware, timing, and result summary
 
 ## Run it
 
@@ -211,9 +207,9 @@ The conclusion is that flat training metrics do not imply that training has stop
 $$
 \rho_t=
 \frac{
-\left\|\theta_t-\theta_{t-1}\right\|_2
+\left\lVert\theta_t-\theta_{t-1}\right\rVert
 }{
-\left\|\theta_{t-1}\right\|_2
+\left\lVert\theta_{t-1}\right\rVert
 }.
 $$
 
