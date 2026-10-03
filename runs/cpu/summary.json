@@ -3,7 +3,7 @@
   "hardware": "Intel(R) Core(TM) Ultra 9 275HX",
   "torch_version": "2.14.1+cpu",
   "cpu_threads": 12,
-  "elapsed_seconds": 1659.061394111999,
+  "elapsed_seconds": 1783.8791849119953,
   "epochs": 40000,
   "parameter_count": 227200,
   "train_pairs": 3830,
@@ -14,7 +14,7 @@
   "final_test_accuracy": 1.0,
   "final_train_loss": 9.036372012981473e-08,
   "final_test_loss": 2.0085412645469786e-07,
-  "dead_period_mean_relative_weight_change_per_epoch": 0.0001255652021736977,
+  "dead_period_mean_relative_weight_change_per_epoch": 0.0001230318512812477,
   "dominant_embedding_frequencies": [
     {
       "frequency": 36,

@@ -6,18 +6,18 @@ Hardware: NVIDIA GeForce RTX 5090 Laptop GPU
 PyTorch: 2.11.0.dev20260215+cu128
 CPU threads: 12
 Epochs: 40,000
-Wall time: 108.6 seconds
+Wall time: 108.9 seconds
 Parameters: 227,200
 Training pairs: 3,830
 Test pairs: 8,939
 Train accuracy reached 99%: epoch 200
-Test accuracy reached 99%: epoch 10500
+Test accuracy reached 99%: epoch 9700
 Final train accuracy: 100.00%
 Final test accuracy: 100.00%
-Final train loss: 8.814e-08
-Final test loss: 1.642e-07
-Mean dead-period weight change: 2.864e-04
-Dominant embedding frequencies: 22, 18, 27
+Final train loss: 8.794e-08
+Final test loss: 1.658e-07
+Mean dead-period weight change: 2.449e-04
+Dominant embedding frequencies: 22, 27, 18
 
 Training configuration
 ----------------------
