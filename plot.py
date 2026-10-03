@@ -22,7 +22,7 @@ class TrainingMetrics(Protocol):
 
 def save_training_plot(history: Sequence[TrainingMetrics], path: Path, prime: int) -> None:
     epochs = [metrics.epoch for metrics in history]
-    figure, axes = plt.subplots(3, 1, figsize=(8, 9), sharex=True)
+    figure, axes = plt.subplots(2, 1, figsize=(8, 7), sharex=True)
     axes[0].plot(epochs, [metrics.train_accuracy for metrics in history], label="Train")
     axes[0].plot(epochs, [metrics.test_accuracy for metrics in history], label="Test")
     axes[0].set_ylabel("Accuracy")
@@ -32,20 +32,29 @@ def save_training_plot(history: Sequence[TrainingMetrics], path: Path, prime: in
     axes[0].grid(True, alpha=0.3)
     axes[1].plot(epochs, [metrics.train_loss for metrics in history], label="Train")
     axes[1].plot(epochs, [metrics.test_loss for metrics in history], label="Test")
+    axes[1].set_xlabel("Epoch")
     axes[1].set_ylabel("Cross-entropy loss")
     axes[1].set_yscale("log")
     axes[1].legend()
     axes[1].grid(True, alpha=0.3)
+    figure.tight_layout()
+    figure.savefig(path, dpi=150)
+    plt.close(figure)
+
+
+def save_weight_change_plot(history: Sequence[TrainingMetrics], path: Path, prime: int) -> None:
     movement = [metrics for metrics in history if metrics.epoch > 0]
-    axes[2].plot(
+    figure, axis = plt.subplots(figsize=(8, 4))
+    axis.plot(
         [metrics.epoch for metrics in movement],
         [metrics.relative_weight_change_per_epoch for metrics in movement],
         color="tab:green",
     )
-    axes[2].set_xlabel("Epoch")
-    axes[2].set_ylabel("Relative weight change per epoch")
-    axes[2].set_yscale("log")
-    axes[2].grid(True, alpha=0.3)
+    axis.set_title(f"Relative weight change, modulus {prime}")
+    axis.set_xlabel("Epoch")
+    axis.set_ylabel("Relative weight change per epoch")
+    axis.set_yscale("log")
+    axis.grid(True, alpha=0.3)
     figure.tight_layout()
     figure.savefig(path, dpi=150)
     plt.close(figure)

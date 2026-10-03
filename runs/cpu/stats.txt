@@ -6,7 +6,7 @@ Hardware: Intel(R) Core(TM) Ultra 9 275HX
 PyTorch: 2.14.1+cpu
 CPU threads: 12
 Epochs: 40,000
-Wall time: 1783.9 seconds
+Wall time: 1787.1 seconds
 Parameters: 227,200
 Training pairs: 3,830
 Test pairs: 8,939

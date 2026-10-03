@@ -3,30 +3,30 @@
   "hardware": "NVIDIA GeForce RTX 5090 Laptop GPU",
   "torch_version": "2.11.0.dev20260215+cu128",
   "cpu_threads": 12,
-  "elapsed_seconds": 108.92674503799935,
+  "elapsed_seconds": 109.69727685300313,
   "epochs": 40000,
   "parameter_count": 227200,
   "train_pairs": 3830,
   "test_pairs": 8939,
   "memorization_epoch": 200,
-  "grokking_epoch": 9700,
+  "grokking_epoch": 10500,
   "final_train_accuracy": 1.0,
   "final_test_accuracy": 1.0,
-  "final_train_loss": 8.79435049027711e-08,
-  "final_test_loss": 1.6584415074918468e-07,
-  "dead_period_mean_relative_weight_change_per_epoch": 0.00024485219525077436,
+  "final_train_loss": 8.815510468265843e-08,
+  "final_test_loss": 1.3254948815865862e-07,
+  "dead_period_mean_relative_weight_change_per_epoch": 0.00023019190722455582,
   "dominant_embedding_frequencies": [
     {
       "frequency": 22,
-      "mean_magnitude": 4.6284499168396
-    },
-    {
-      "frequency": 27,
-      "mean_magnitude": 3.604827880859375
+      "mean_magnitude": 4.656992435455322
     },
     {
       "frequency": 18,
-      "mean_magnitude": 3.528717517852783
+      "mean_magnitude": 3.658555507659912
+    },
+    {
+      "frequency": 27,
+      "mean_magnitude": 3.3509397506713867
     }
   ],
   "config": {

@@ -3,7 +3,7 @@
   "hardware": "Intel(R) Core(TM) Ultra 9 275HX",
   "torch_version": "2.14.1+cpu",
   "cpu_threads": 12,
-  "elapsed_seconds": 1783.8791849119953,
+  "elapsed_seconds": 1787.075087229001,
   "epochs": 40000,
   "parameter_count": 227200,
   "train_pairs": 3830,

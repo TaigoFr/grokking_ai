@@ -7,7 +7,7 @@ import torch
 
 from data import make_modular_addition_split
 from model import ModularAdditionTransformer, initialize_parameters
-from plot import save_clock_plot, save_training_plot
+from plot import save_clock_plot, save_training_plot, save_weight_change_plot
 from report import build_summary, format_stats
 from train import Config, run_training
 
@@ -61,6 +61,7 @@ def main() -> None:
     )
 
     save_training_plot(training_result.history, output_dir / "training.png", config.prime)
+    save_weight_change_plot(training_result.history, output_dir / "weight-change.png", config.prime)
     for epoch, token_embedding in training_result.token_embedding_snapshots.items():
         save_clock_plot(token_embedding, config.prime, output_dir / f"clock-epoch-{epoch}.png")
     save_clock_plot(model.token_embedding.weight.detach(), config.prime, output_dir / "clock.png")

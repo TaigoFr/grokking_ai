@@ -92,7 +92,7 @@ $$
 
 Frequency 1 advances one marker, frequency 2 advances two, and so on. Because 113 is prime, every frequency that is nonzero modulo 113 visits all 113 positions exactly once before returning to the start. For example, frequency 2 visits $0,2,4,\ldots,112,1,3,\ldots,111$. Frequencies $k$ and $113-k$ trace the same clock in opposite directions, so a real discrete Fourier transform (rfft) contains only 56 unique nonzero frequencies. Each one can represent the complete addition rule.
 
-In fact, the network usually selects a sparse handful of these valid clocks and combines their votes to sharpen the correct output! The paper's mainline model used five key frequencies, $k\in\{14,35,41,42,52\}$, while its other seeds selected different sets of three or four. Our GPU embedding is strongest at 22, 27, and 18; our CPU embedding is strongest at 36, 10, and 9. As a side note, we identify frequencies slightly differently from the paper: we pick the three largest modes in the input embedding, whereas the paper defined a frequency as "key" only when it was also used downstream in the neuron-logit map.
+In fact, the network usually selects a sparse handful of these valid clocks and combines their votes to sharpen the correct output! The paper's mainline model used five key frequencies, $k\in\{14,35,41,42,52\}$, while its other seeds selected different sets of three or four. Our GPU embedding is strongest at 22, 18, and 27; our CPU embedding is strongest at 36, 10, and 9. As a side note, we identify frequencies slightly differently from the paper: we pick the three largest modes in the input embedding, whereas the paper defined a frequency as "key" only when it was also used downstream in the neuron-logit map.
 
 Here is how our clock works for the GPU run:
 
@@ -138,8 +138,8 @@ We successfully reproduced the result with 40,000-epoch CPU and GPU runs.
 
 | Run | Hardware | Time | Train 99% | Test 99% | Mean plateau movement | Final test |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| CPU | Intel Core Ultra 9 275HX, 12 threads | 1,783.9 s | epoch 200 | epoch 28,400 | $1.23\times10^{-4}$ | 100% |
-| GPU | NVIDIA RTX 5090 Laptop GPU | 108.9 s | epoch 200 | epoch 9,700 | $2.45\times10^{-4}$ | 100% |
+| CPU | Intel Core Ultra 9 275HX, 12 threads | 1,787.1 s | epoch 200 | epoch 28,400 | $1.23\times10^{-4}$ | 100% |
+| GPU | NVIDIA RTX 5090 Laptop GPU | 109.7 s | epoch 200 | epoch 10,500 | $2.30\times10^{-4}$ | 100% |
 
 The plateau mean uses logged epochs where training accuracy is at least 99% and test accuracy is below 10%.
 
@@ -153,7 +153,7 @@ The GPU run was about 16 times faster. GPU arithmetic does not reproduce the exa
 ├── data.py           # Complete modular-addition table and fixed split
 ├── main.py           # Experiment setup and output generation
 ├── model.py          # One-layer transformer
-├── plot.py           # Training and Fourier-clock plots
+├── plot.py           # Training, weight-change, and Fourier-clock plots
 ├── report.py         # Run summaries and readable statistics
 ├── train.py          # Full-batch training loop and measurements
 ├── requirements.txt
@@ -167,7 +167,8 @@ The GPU run was about 16 times faster. GPU arithmetic does not reproduce the exa
 
 Each run directory ([`runs/cpu`](runs/cpu) and [`runs/gpu`](runs/gpu)) contains:
 
-- `training.png`: accuracy, cross-entropy, and relative weight change
+- `training.png`: accuracy and cross-entropy
+- `weight-change.png`: relative weight change per logged optimizer step
 - `clock-epoch-5000.png`: dominant embedding clocks early in the plateau
 - `clock.png`: dominant Fourier modes in the learned number embeddings
 - `metrics.csv`: measurements every 100 epochs
@@ -213,7 +214,9 @@ $$
 }.
 $$
 
-The plot samples this one-step quantity every 100 epochs alongside the other logged metrics.
+The plot below samples this one-step quantity every 100 epochs. The GPU curve is shown here:
+
+![GPU relative weight change](runs/gpu/weight-change.png)
 
 During the middle period, after memorization and before grokking, movement is $O(10^{-4})$ per epoch in both runs. For comparison, decoupled weight decay from the AdamW optimizer alone has the per-step relative scale
 
