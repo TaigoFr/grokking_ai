@@ -22,6 +22,8 @@ In machine learning, **grokking** is an unexpected phenomenon of delayed general
 
 In this example, the model first memorizes 30% of the modular-addition table while remaining near chance level on the other 70%. Thousands of full-batch updates later, test accuracy rises abruptly even though training accuracy and training loss had been flat for a long time. As we shall see, the model gradually develops a generalizing clock-based circuit during this plateau.
 
+Does this mean overfitting is now ok? Not really. This process is definitely rare, and how to identify it during training remains unclear for the general case.
+
 ![GPU training run](runs/gpu/training.png)
 
 ## Experiment
